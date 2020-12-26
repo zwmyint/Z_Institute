@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Z_Institute.DAL;
+using Z_Institute.Models;
 using Z_Institute.Services.IRepository;
 
 namespace Z_Institute.Controllers
@@ -19,16 +21,17 @@ namespace Z_Institute.Controllers
         //    _context = context;
         //}
 
-        private readonly ICourseRepository _courseReposity;
+        private readonly ICourseRepository _courseRepository;
+        private readonly IDepartmentRepository _departmentRepository;
 
         //public CourseController(ZDb_Context context, ICourseRepository courseRepository)
-        public CourseController(ICourseRepository courseRepository)
+        public CourseController(ICourseRepository courseRepository, IDepartmentRepository departmentRepository)
         {
-            _courseReposity = courseRepository;
+            _courseRepository = courseRepository;
+            _departmentRepository = departmentRepository;
         }
-
-
-        //
+        
+        // 0
         public IActionResult Index()
         {
 
@@ -41,7 +44,7 @@ namespace Z_Institute.Controllers
             //                  select course;
 
             //var allcourses = _courseReposity.GetAll();
-            var allcourses = _courseReposity.CoursesToDepartment();
+            var allcourses = _courseRepository.CoursesToDepartment();
 
             //return View(allCourse); // method syntax 
             //return View(querySyntax); // query syntax
@@ -49,6 +52,87 @@ namespace Z_Institute.Controllers
 
         }
 
+        // 1
+        [HttpGet]
+        public IActionResult Create()
+        {
+            //for Department DropDown
+            //ViewBag.Departments = _departmentRepository.GetAll();
+            ViewBag.Departments = new SelectList(_departmentRepository.GetAll(), "DepartmentId", "DepartmentName");
+
+            return View();
+        }
+
+        // 2
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreatePost(Course model)
+        {
+            if (ModelState.IsValid)
+            {
+                _courseRepository.Add(model);
+                return RedirectToAction("Index");
+            }
+
+            return View("Create");
+
+        }
+         
+        // 1
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var course = _courseRepository.GetById(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            //ViewBag.Departments = _departmentRepository.GetAll();
+            ViewBag.Departments = new SelectList(_departmentRepository.GetAll(), "DepartmentId", "DepartmentName");
+
+            return View(course);
+        }
+
+        // 2
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Course model)
+        {
+            if (ModelState.IsValid)
+            {
+                _courseRepository.Update(model);
+                return RedirectToAction("Index");
+            }
+
+            return View("Edit");
+        }
+
+        // 1
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var course = _courseRepository.GetById(id);
+            if (course == null && id == 0)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+        // 2
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int id)
+        {
+            var course = _courseRepository.GetById(id);
+            if (course == null && id == 0)
+            {
+                return NotFound();
+            }
+            _courseRepository.Delete(course);
+            return RedirectToAction("Index");
+        }
 
 
         //

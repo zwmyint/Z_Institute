@@ -35,6 +35,9 @@ namespace Z_Institute
 
             //
             services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+
+
 
             // added
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
