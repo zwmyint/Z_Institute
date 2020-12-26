@@ -135,6 +135,20 @@ namespace Z_Institute.Controllers
         }
 
 
+        // 0
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var course = _courseRepository.CoursesToDepartment().FirstOrDefault(x => x.CourseId == id);
+            if (course == null && id == 0)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+
         //
     }
 }
