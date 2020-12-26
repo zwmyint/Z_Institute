@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Z_Institute.Models;
 
 namespace Z_Institute.DAL
 {
-    public class Z_Context: DbContext
+    public class ZDb_Context:IdentityDbContext
     {
         //
 
@@ -17,7 +18,7 @@ namespace Z_Institute.DAL
         public DbSet<Department> tbl_Department { get; set; }
 
 
-        public Z_Context(DbContextOptions options)
+        public ZDb_Context(DbContextOptions options)
             : base(options)
         {
 

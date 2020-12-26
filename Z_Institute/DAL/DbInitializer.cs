@@ -14,7 +14,7 @@ namespace Z_Institute.DAL
         {
             using (var serviceScope = builder.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<Z_Context>();
+                var context = serviceScope.ServiceProvider.GetService<ZDb_Context>();
 
                 if (!context.tbl_Department.Any())
                 {

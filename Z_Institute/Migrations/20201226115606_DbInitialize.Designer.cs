@@ -8,7 +8,7 @@ using Z_Institute.DAL;
 
 namespace Z_Institute.Migrations
 {
-    [DbContext(typeof(Z_Context))]
+    [DbContext(typeof(ZDb_Context))]
     [Migration("20201226115606_DbInitialize")]
     partial class DbInitialize
     {

@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Z_Institute.DAL;
 using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Z_Institute.Services.IRepository;
+using Z_Institute.Services.Repository;
 
 namespace Z_Institute
 {
@@ -28,8 +30,11 @@ namespace Z_Institute
         public void ConfigureServices(IServiceCollection services)
         {
             // Register the Z_Context // using Microsoft.EntityFrameworkCore;
-            services.AddDbContext<Z_Context>(options =>
+            services.AddDbContext<ZDb_Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //
+            services.AddTransient<ICourseRepository, CourseRepository>();
 
             // added
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

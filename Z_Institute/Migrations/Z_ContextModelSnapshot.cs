@@ -7,7 +7,7 @@ using Z_Institute.DAL;
 
 namespace Z_Institute.Migrations
 {
-    [DbContext(typeof(Z_Context))]
+    [DbContext(typeof(ZDb_Context))]
     partial class Z_ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
