@@ -1,0 +1,29 @@
+﻿.Net Core 2.2 Application
+
+EF Core 2.2.6
+
+PM>
+Add-Migration DbInitialize
+// Migration folder and class will create
+
+Update-Database -Verbose
+// To Create Database
+
+//1
+// to create table name tbl_Course
+Add-Migration AddCourseTableToDatabase
+
+//then update database
+Update-Database -Verbose
+
+//2
+// to create table name tbl_Department
+Add-Migration AddDepartmentTableToDatabase
+
+//then update database
+Update-Database -Verbose
+
+// create Seed >>> DbInitializer.cs
+
+// create controllers
+
