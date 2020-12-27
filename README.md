@@ -25,3 +25,23 @@ ASP.NET Core. (2.2 version) and EF Core (2.2.6)
 
 10> Security
 
+>>>> To Learn
+Build App using ASP NET MVC Core
+Authentication and Authorization
+Generic Repository Pattern
+Linq
+Entity Framework Core
+simple to complex query
+Dependency Injection (DI)
+Data Seeding Initialized (Models and User roles)
+Manage Client-Side Packages
+Data annotation and Fluent API
+Using ViewModels
+LinqPad Tool
+Users
+Roles
+
+
+for Paging package used this
+Install-Package ReflectionIT.Mvc.Paging
+Use https://www.nuget.org/packages/ReflectionIT.Mvc.Paging/3.5.0 if you are still using ASP.NET Core 2.2
