@@ -27,3 +27,17 @@ Update-Database -Verbose
 
 // create controllers
 
+//3
+// to create table name tbl_Student
+Add-Migration AddStudentTableToDatabase
+
+//then update database
+Update-Database -Verbose
+
+//4
+// to create table name tbl_Enrollment
+Add-Migration AddEnrollmentTableToDatabase
+
+//then update database
+Update-Database -Verbose
+
