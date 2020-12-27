@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using ReflectionIT.Mvc.Paging;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Z_Institute.Models;
 using Z_Institute.Services.IRepository;
 using Z_Institute.ViewModels;
@@ -20,7 +18,7 @@ namespace Z_Institute.Controllers
         }
 
         // 0 
-        public IActionResult Index(string sortOrder, string searchString)
+        public IActionResult Index(string sortOrder, string searchString, int pageindex = 1)
         {
 
             //if (string.IsNullOrEmpty(sortOrder))
@@ -72,7 +70,11 @@ namespace Z_Institute.Controllers
 
             }
 
-            return View(students);
+            // paging
+            var model = PagingList.Create(students, 2, pageindex);
+
+            //return View(students);
+            return View(model);
         }
 
         // 1

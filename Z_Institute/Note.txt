@@ -2,6 +2,10 @@
 
 EF Core 2.2.6
 
+Paging for this package
+Install-Package ReflectionIT.Mvc.Paging
+Use https://www.nuget.org/packages/ReflectionIT.Mvc.Paging/3.5.0 if you are still using ASP.NET Core 2.2
+
 PM>
 Add-Migration DbInitialize
 // Migration folder and class will create

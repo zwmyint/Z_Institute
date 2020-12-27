@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Z_Institute.Services.IRepository;
 using Z_Institute.Services.Repository;
+using ReflectionIT.Mvc.Paging;
 
 namespace Z_Institute
 {
@@ -41,6 +42,12 @@ namespace Z_Institute
 
             // added
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // aded for Paging >> Install-Package ReflectionIT.Mvc.Paging
+            services.AddPaging(options => {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageindex";
+            });
 
             //
         }
