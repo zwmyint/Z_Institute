@@ -38,6 +38,9 @@ namespace Z_Institute
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
+
+
 
 
             // added
