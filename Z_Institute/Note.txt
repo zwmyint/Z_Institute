@@ -45,3 +45,15 @@ Add-Migration AddEnrollmentTableToDatabase
 //then update database
 Update-Database -Verbose
 
+
+//5
+// to create other tables
+Add-Migration AddothertableToDatabase
+
+//then update database
+Update-Database -Verbose
+
+
+
+
+@*<input asp-for="DateProperty" asp-format="@Model.EnrollmentDate.ToString($"{0:dd/MM/yyyy}")">*@

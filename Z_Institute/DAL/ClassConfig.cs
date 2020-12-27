@@ -38,6 +38,9 @@ namespace Z_Institute.DAL
             //    .WithOne(o => o.Department)
             //    .HasForeignKey(f => f.DepartmentId);
 
+            builder.HasOne(i => i.Instructor)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 
@@ -73,6 +76,51 @@ namespace Z_Institute.DAL
 
         }
     }
+
+    //
+    public class InstructorConfig : IEntityTypeConfiguration<Instructor>
+    {
+        public void Configure(EntityTypeBuilder<Instructor> builder)
+        {
+            builder.HasKey(k => k.InstructorId);
+            builder.Property(p => p.LastName).HasMaxLength(25);
+            builder.Property(p => p.LastName).HasMaxLength(25);
+            builder.Property(p => p.HireDate).HasColumnType("Date").HasDefaultValueSql("GetDate()");
+            builder.Ignore(p => p.FullName);
+
+
+            builder.HasOne(o => o.OfficeAssignment)
+                .WithOne(i => i.Instructor)
+                .HasForeignKey<OfficeAssignment>(i => i.OfficeAssignmentId);
+        }
+    }
+
+    //
+    public class OfficeAssignmentConfig : IEntityTypeConfiguration<OfficeAssignment>
+    {
+        public void Configure(EntityTypeBuilder<OfficeAssignment> builder)
+        {
+            builder.HasKey(k => k.OfficeAssignmentId);
+        }
+    }
+
+    //
+    public class CourseAssignmentConfig : IEntityTypeConfiguration<CourseAssignment>
+    {
+        public void Configure(EntityTypeBuilder<CourseAssignment> builder)
+        {
+            builder.HasKey(k => new { k.CourseId, InstructorId = k.CourseAssignmentId });
+
+            builder.HasOne(i => i.Instructor)
+                .WithMany(ca => ca.CourseAssignments)
+                .HasForeignKey(i => i.CourseAssignmentId);
+
+            builder.HasOne(c => c.Course)
+                .WithMany(ca => ca.CourseAssignments)
+                .HasForeignKey(c => c.CourseId);
+        }
+    }
+
 
 
     //
