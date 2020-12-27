@@ -20,9 +20,57 @@ namespace Z_Institute.Controllers
         }
 
         // 0 
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, string searchString)
         {
+
+            //if (string.IsNullOrEmpty(sortOrder))
+            //{
+            //    ViewData["sortName"] = "name_desc";
+            //}
+            //else
+            //{
+            //    ViewData["sortName"] = "";
+            //}
+
+            ViewData["sortName"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["sortByDate"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["currentFilter"] = searchString;
+
+            //if (sortOrder == "Date")
+            //{
+            //    ViewData["sortByDate"] = "date_desc";
+            //}
+            //else
+            //{
+            //    ViewData["sortByDate"] = "Date";
+            //}
+
             var students = _studentRepository.GetAll();
+
+            // where
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.FirstName.ToLower().Contains(searchString.ToLower()) || 
+                s.LastName.ToLower().Contains(searchString.ToLower()));
+            }
+
+            // order
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.FirstName);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.FirstName);
+                    break;
+
+            }
 
             return View(students);
         }

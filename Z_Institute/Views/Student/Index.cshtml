@@ -9,18 +9,32 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div>
+	<form method="get" asp-action="Index" class="form-inline my-2 my-lg-0">
+		search by name : &nbsp;
+		<input type="search" name="searchString" value="@ViewData["currentFilter"]" placeholder="search" class="form-control mr-sm-2"/>
+		<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" />
+	</form>
+</div>
+<br />
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
+			<th>
+				@*@Html.DisplayNameFor(model => model.FirstName)*@
+				<a asp-action="Index" asp-route-sortOrder="@ViewData["sortName"]">
+					First Name
+				</a>
+			</th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EnrollmentDate)
-            </th>
+			<th>
+				@*@Html.DisplayNameFor(model => model.EnrollmentDate)*@
+				<a asp-action="Index" asp-route-sortOrder="@ViewData["sortByDate"]">
+					Enrollment Date
+				</a>
+			</th>
             <th></th>
         </tr>
     </thead>
