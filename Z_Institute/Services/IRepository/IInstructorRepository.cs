@@ -6,13 +6,12 @@ using Z_Institute.Models;
 
 namespace Z_Institute.Services.IRepository
 {
-    public interface IDepartmentRepository:IRepository<Department>
+    public interface IInstructorRepository:IRepository<Instructor>
     {
-        IEnumerable<Department> InstructorToDepartments();
 
-        Department InstructorToDepartment(int id);
+        Task<IEnumerable<Instructor>> InstructorsAsync();
+        Task<Instructor> Instructor(int id);
 
         //
-
     }
 }

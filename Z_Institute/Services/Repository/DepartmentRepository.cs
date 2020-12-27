@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,20 @@ namespace Z_Institute.Services.Repository
             _context = context;
         }
 
+        public IEnumerable<Department> InstructorToDepartments()
+        {
+            return _context.tbl_Department.Include(x => x.Instructor).ToList();
+
+        }
+
+        public Department InstructorToDepartment(int id)
+        {
+            //return (from department in _context.tbl_Department
+            //        join instructor in _context.tbl_Instructor on department.DepartmentId equals instructor.InstructorId
+            //        select department).FirstOrDefault(x => x.DepartmentId == id);
+
+            return _context.tbl_Department.Include(x => x.Instructor).FirstOrDefault(x => x.DepartmentId == id);
+        }
 
         //
     }

@@ -10,6 +10,13 @@ namespace Z_Institute.Controllers
 {
     public class StudentController : Controller
     {
+        //
+        //private readonly ZDb_Context _context;
+
+        //public CourseController(ZDb_Context context)
+        //{
+        //    _context = context;
+        //}
 
         private readonly IStudentRepository _studentRepository;
         private readonly IEnrollmentRepository _enrollmentRepository;
