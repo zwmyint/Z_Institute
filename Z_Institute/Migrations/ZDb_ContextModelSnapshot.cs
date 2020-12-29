@@ -43,11 +43,11 @@ namespace Z_Institute.Migrations
                 {
                     b.Property<int>("CourseId");
 
-                    b.Property<int>("CourseAssignmentId");
+                    b.Property<int>("InstructorId");
 
-                    b.HasKey("CourseId", "CourseAssignmentId");
+                    b.HasKey("CourseId", "InstructorId");
 
-                    b.HasIndex("CourseAssignmentId");
+                    b.HasIndex("InstructorId");
 
                     b.ToTable("tbl_CourseAssignment");
                 });
@@ -117,11 +117,11 @@ namespace Z_Institute.Migrations
 
             modelBuilder.Entity("Z_Institute.Models.OfficeAssignment", b =>
                 {
-                    b.Property<int>("OfficeAssignmentId");
+                    b.Property<int>("InstructorId");
 
                     b.Property<string>("Location");
 
-                    b.HasKey("OfficeAssignmentId");
+                    b.HasKey("InstructorId");
 
                     b.ToTable("tbl_OfficeAssignment");
                 });
@@ -160,14 +160,14 @@ namespace Z_Institute.Migrations
 
             modelBuilder.Entity("Z_Institute.Models.CourseAssignment", b =>
                 {
-                    b.HasOne("Z_Institute.Models.Instructor", "Instructor")
-                        .WithMany("CourseAssignments")
-                        .HasForeignKey("CourseAssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Z_Institute.Models.Course", "Course")
                         .WithMany("CourseAssignments")
                         .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Z_Institute.Models.Instructor", "Instructor")
+                        .WithMany("CourseAssignments")
+                        .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -196,7 +196,7 @@ namespace Z_Institute.Migrations
                 {
                     b.HasOne("Z_Institute.Models.Instructor", "Instructor")
                         .WithOne("OfficeAssignment")
-                        .HasForeignKey("Z_Institute.Models.OfficeAssignment", "OfficeAssignmentId")
+                        .HasForeignKey("Z_Institute.Models.OfficeAssignment", "InstructorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

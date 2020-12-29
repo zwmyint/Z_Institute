@@ -36,7 +36,7 @@ namespace Z_Institute.Services.Repository
 
         }
 
-        public async Task<Instructor> Instructor(int id)
+        public async Task<Instructor> InstructorAsync(int id)
         {
 
             return await _context.tbl_Instructor

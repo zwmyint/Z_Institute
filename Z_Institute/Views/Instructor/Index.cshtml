@@ -10,7 +10,7 @@
 	<a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-	<thead>
+	<thead class="thead-light">
 		<tr>
 			<th>
 				First Name
@@ -27,7 +27,9 @@
 			<th>
 				Title
 			</th>
-			<th></th>
+			<th>
+				Actions
+			</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -70,19 +72,26 @@
 @if (Model.Courses != null)
 {
 	<h3>Courses Taught by Selected Instructor</h3>
+
 	<table class="table table-sm table-hover">
 		<thead class="thead-light">
 			<tr>
-				<th>Number</th>
-				<th>Title</th>
-				<th>Department</th>
 				<th>.</th>
+				<th>CourseName</th>
+				<th>Credits</th>
+				<th>Department</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var c in Model.Courses)
 			{
-				<tr>
+				string selectedString = "";
+				if (@c.CourseId == (int?)ViewData["CourseId"])
+				{
+					selectedString = "bg-info";
+				}
+				<tr class="@selectedString">
+					<td><a asp-action="Index" asp-route-courseid="@c.CourseId">Select</a></td>
 					<td>
 						@c.CourseName
 					</td>
@@ -92,11 +101,36 @@
 					<td>
 						@c.Department.DepartmentName
 					</td>
-					<td>
 
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@if (Model.Enrollments != null)
+{
+	<h3>Students Enrolled in Selected Course</h3>
+
+	<table class="table table-sm table-hover">
+		<thead class="thead-light">
+			<tr>
+				<th>Name</th>
+				<th>Grade</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.Enrollments)
+			{
+				<tr>
+					<td>
+						@item.Student.FirstName
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Grade)
 					</td>
 				</tr>
 			}
-		</tbody>	
+		</tbody>
 	</table>
 }

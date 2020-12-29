@@ -10,7 +10,7 @@ namespace Z_Institute.Services.IRepository
     {
 
         Task<IEnumerable<Instructor>> InstructorsAsync();
-        Task<Instructor> Instructor(int id);
+        Task<Instructor> InstructorAsync(int id);
 
         //
     }

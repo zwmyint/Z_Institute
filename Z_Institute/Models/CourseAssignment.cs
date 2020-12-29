@@ -7,7 +7,9 @@ namespace Z_Institute.Models
 {
     public class CourseAssignment
     {
-        public int CourseAssignmentId { get; set; }
+        //public int CourseAssignmentId { get; set; }
+
+        public int InstructorId { get; set; }
         public Instructor Instructor { get; set; }
 
 

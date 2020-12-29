@@ -91,7 +91,7 @@ namespace Z_Institute.DAL
 
             builder.HasOne(o => o.OfficeAssignment)
                 .WithOne(i => i.Instructor)
-                .HasForeignKey<OfficeAssignment>(i => i.OfficeAssignmentId);
+                .HasForeignKey<OfficeAssignment>(i => i.InstructorId);
         }
     }
 
@@ -100,7 +100,7 @@ namespace Z_Institute.DAL
     {
         public void Configure(EntityTypeBuilder<OfficeAssignment> builder)
         {
-            builder.HasKey(k => k.OfficeAssignmentId);
+            builder.HasKey(k => k.InstructorId);
         }
     }
 
@@ -109,11 +109,11 @@ namespace Z_Institute.DAL
     {
         public void Configure(EntityTypeBuilder<CourseAssignment> builder)
         {
-            builder.HasKey(k => new { k.CourseId, InstructorId = k.CourseAssignmentId });
+            builder.HasKey(k => new { k.CourseId, k.InstructorId });
 
             builder.HasOne(i => i.Instructor)
                 .WithMany(ca => ca.CourseAssignments)
-                .HasForeignKey(i => i.CourseAssignmentId);
+                .HasForeignKey(i => i.InstructorId);
 
             builder.HasOne(c => c.Course)
                 .WithMany(ca => ca.CourseAssignments)
