@@ -84,7 +84,7 @@ namespace Z_Institute.Controllers
 
                 _instructorRepository.Add(model.Instructor);
 
-                var insId = model.Instructor.InstructorId;
+                var instrId = model.Instructor.InstructorId;
                 foreach(var data in model.AssignedCourseData)
                 {
                     if(data.Assigned)
@@ -92,7 +92,7 @@ namespace Z_Institute.Controllers
                         _courseAssignmentRepository.Add(new CourseAssignment()
                         {
                             CourseId = data.CourseId,
-                            InstructorId = insId
+                            InstructorId = instrId
                         });
                     }
                 }
