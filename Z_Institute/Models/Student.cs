@@ -15,6 +15,7 @@ namespace Z_Institute.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public Gender Gender { get; set; }
+
         [Display(Name = "Enrollment Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]

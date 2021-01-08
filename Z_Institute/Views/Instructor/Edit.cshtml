@@ -1,17 +1,18 @@
 ﻿@model EditCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Instructor</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-		<form asp-action="Create">
+		<form asp-action="Edit">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="@Model.Instructor.InstructorId" />
 			<div class="form-group">
 				<label asp-for="@Model.Instructor.FirstName" class="control-label"></label>
 				<input asp-for="@Model.Instructor.FirstName" class="form-control" />
@@ -32,7 +33,6 @@
 				<input asp-for="@Model.Instructor.OfficeAssignment.Location" class="form-control" />
 				<span asp-validation-for="@Model.Instructor.OfficeAssignment.Location" class="text-danger"></span>
 			</div>
-
 			<div class="col">
 				@for (int i = 0; i < @Model.AssignedCourseData.Count; i++)
 				{
@@ -40,20 +40,12 @@
 					@Html.CheckBoxFor(x => @Model.AssignedCourseData[i].Assigned)
 					<label class="form-check-label">@Model.AssignedCourseData[i].CourseName</label><br />
 				}
-				@*@foreach (var course in Model.AssignedCourseData)
-				{
-					<input type="hidden" asp-for="@course.CourseId" />
-					<input type="checkbox" asp-for="@course.Assigned" value="@course.Assigned" />
-					<label class="text text-capitalize">@course.CourseName</label><br />
-
-				}*@
-
+				
 			</div>
 			<div>&nbsp;</div>
 			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" />
+				<input type="submit" value="Save" class="btn btn-primary" />
 			</div>
-
 		</form>
     </div>
 </div>

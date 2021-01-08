@@ -19,13 +19,13 @@ namespace Z_Institute.Services.Repository
             _context = context;
         }
 
-        //public async Task<List<CourseAssignment>> CoursesToInstructorAsync(int id)
-        //{
-        //    return await _context.tbl_CourseAssignment
-        //        .Where(x => x.CourseAssignmentId == id)
-        //        .Include(x => x.Course)
-        //        .ToListAsync();
-        //}
+        public async Task<List<CourseAssignment>> CoursesToInstructorAsync(int id)
+        {
+            return await _context.tbl_CourseAssignment
+                .Where(x => x.InstructorId == id)
+                .Include(x => x.Course)
+                .ToListAsync();
+        }
 
         //public List<CourseAssignment> CoursesToInstructor(int id)
         //{

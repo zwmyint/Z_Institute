@@ -37,6 +37,8 @@ namespace Z_Institute.Controllers
 
             if(id != null)
             {
+                ViewData["instructorId"] = id.Value;
+
                 var instructor = model.Instructors.FirstOrDefault(x => x.InstructorId == id);
                 if (instructor != null) model.Courses = instructor.CourseAssignments.Select(s => s.Course);
             }
@@ -104,6 +106,127 @@ namespace Z_Institute.Controllers
         }
 
 
+        // 1
+        public async Task<IActionResult>Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = _instructorRepository.GetById((int)id);
+            var allCourses = _courseRepository.GetAll();
+            var coursesToInstructor = await _courseAssignmentRepository.CoursesToInstructorAsync(instructor.InstructorId);
+            var model = new EditCreateViewModel()
+            {
+                Instructor = instructor,
+                AssignedCourseData = allCourses.Select(s => new AssignedCourseData()
+                {
+                    CourseId = s.CourseId,
+                    CourseName = s.CourseName,
+                    Assigned = coursesToInstructor.Exists(x => x.Course.CourseId == s.CourseId)
+
+                }).OrderBy(x => x.CourseName).ToList()
+            };
+
+
+            return View(model);
+
+        }
+
+        // 2
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditPost(EditCreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+
+            _instructorRepository.Update(model.Instructor);
+
+            var insId = model.Instructor.InstructorId;
+
+            foreach (var data in model.AssignedCourseData)
+            {
+                if (data.Assigned)
+                {
+                    var isExist = IsExistModel(_courseAssignmentRepository.GetAll(), insId, data.CourseId);
+
+                    if(!isExist)
+                    {
+                        _courseAssignmentRepository.Add(new CourseAssignment()
+                        {
+                            CourseId = data.CourseId,
+                            InstructorId = model.Instructor.InstructorId
+                        });
+                    }
+                    
+                    //
+
+                }
+                else
+                {
+                    var isExist = IsExistModel(_courseAssignmentRepository.GetAll(), insId, data.CourseId);
+                    if (isExist)
+                    {
+
+                        var filter = _courseAssignmentRepository
+                            .GetByFiler(x => x.InstructorId == insId && x.CourseId == data.CourseId)
+                            .FirstOrDefault();
+                        _courseAssignmentRepository.Delete(filter);
+                    }
+
+                    //
+                }
+
+                //
+            }
+
+            //
+
+            return RedirectToAction("Index");
+
+        }
+
+        // 3
+        private bool IsExistModel(IEnumerable<CourseAssignment> source, int instructorId, int courseId)
+        {
+            return source.Where(x => x.InstructorId == instructorId).Any(c => c.CourseId == courseId);
+        }
+
+
+        // 1
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var model = await _instructorRepository.InstructorAsync((int)id);
+
+            return View(model);
+
+        }
+
+        // 2
+        public IActionResult DeletePost(int? instructorId)
+        {
+            if(instructorId == null)
+            {
+                return NotFound();
+            }
+
+            var instructor = _instructorRepository.GetById((int)instructorId);
+            if (instructor == null)
+            {
+                return NotFound();
+            }
+
+            _instructorRepository.Delete(instructor);
+            return RedirectToAction("Index");
+        }
 
 
         // 0

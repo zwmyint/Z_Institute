@@ -35,7 +35,13 @@
 	<tbody>
 		@foreach (var item in Model.Instructors)
 		{
-			<tr>
+			string selectedString = "";
+			if (item.InstructorId == (int?)ViewData["instructorId"])
+			{
+				selectedString = "bg-info";
+			}
+
+			<tr class="@selectedString">
 				<td>
 					@Html.DisplayFor(modelItem => item.FirstName)
 				</td>
@@ -56,7 +62,7 @@
 					{
 						@course.Course.CourseName<br />
 					}
-				</td>foreach
+				</td>
 
 				<td>
 					<a asp-action="Index" asp-route-id="@item.InstructorId">Select</a> |
